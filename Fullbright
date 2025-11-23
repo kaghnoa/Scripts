@@ -1,0 +1,56 @@
+--toggle
+getgenv().Fullbright = false
+
+local Lighting = game:GetService("Lighting")
+
+local Default = {}
+local function SaveDefault()
+	Default.Ambient = Lighting.Ambient
+	     Default.OutdoorAmbient = Lighting.OutdoorAmbient
+	Default.FogStart = Lighting.FogStart
+	Default.FogEnd = Lighting.FogEnd
+	Default.Brightness = Lighting.Brightness
+end
+   SaveDefault()
+
+    local function Apply()
+	       Lighting.Ambient = Color3.new(1,1,1)
+	Lighting.OutdoorAmbient = Color3.new(1,1,1)
+	Lighting.FogStart = 999967
+	Lighting.FogEnd = 999967
+	Lighting.Brightness = 3
+end
+
+     local function Restore()
+	        for k,v in pairs(Default) do
+		Lighting[k] = v
+	end
+end
+
+task.spawn(function()
+	      while task.wait(1) do
+		if getgenv().Fullbright then
+			Apply()
+		end
+	end
+end)
+
+task.spawn(function()
+	local last = getgenv().Fullbright
+	while task.wait(0.2) do
+		if getgenv().Fullbright ~= last then
+			last = getgenv().Fullbright
+			if last then
+				SaveDefault()
+				Apply()
+			else
+				Restore()
+			end
+		end
+	end
+end)
+
+
+
+
+--để tao sài lại web viết lua khác web này như cứt
