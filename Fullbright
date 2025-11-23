@@ -1,5 +1,5 @@
 --toggle
-getgenv().Fullbright = false
+getgenv().Fullbright = true
 
 local Lighting = game:GetService("Lighting")
 
